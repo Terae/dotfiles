@@ -1,0 +1,222 @@
+execute pathogen#infect()
+
+set rtp+=/usr/lib/python3/dist-packages/powerline/bindings/vim/
+set laststatus=2
+set t_Co=256
+
+set shell=/bin/zsh
+
+" Basic settings {{{
+set nocompatible
+
+let mapleader = " "
+let localleader = "\\"
+
+" Turn on line numbering. Turn it off with "set nonu"
+set number
+" set nowrap
+" Indent automatically depending on filetype
+filetype indent on
+set autoindent
+set smartindent
+
+set backspace=indent,eol,start
+
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set noexpandtab
+
+filetype plugin on
+syntax on
+
+set showmatch "brackets
+
+" Enable mouse
+set mouse=a
+
+" Display the current mode and partially-typed commands in the status line
+set showmode
+set showcmd
+
+set scrolloff=2
+
+set title
+
+set hlsearch
+nohlsearch
+set incsearch
+
+" List completions
+set wildmode=longest:list,full
+
+set langmap=йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,ж\\;,э',яz,чx,сc,мv,иb,тn,ьm,ю.,ё',ЙQ,ЦW,УE,КR,ЕT,НY,ГU,ШI,ЩO,ЗP,Х\{,Ъ\},ФA,ЫS,ВD,АF,ПG,РH,ОJ,ЛK,ДL,Ж\:,Э\",ЯZ,ЧX,СC,МV,ИB,ТN,ЬM,Б\<,Ю\>
+set encoding=utf-8 nobomb
+
+set list
+set listchars=tab:»\ ,trail:·,extends:>,nbsp:.
+
+" Set insensitive search
+set ic
+
+" Highlight search
+set hls
+
+" Wrap text instead of being on one line
+set lbr
+
+" Change colorscheme from default to delek
+colorscheme elflord
+
+" Save 50 lines of command-line (etc) history
+set history=50
+
+" Source vim in working directories
+set exrc
+set secure
+" }}}
+
+" Status line settings {{{
+" Always show status line
+if has("statusline") && !&cp
+	set laststatus=2
+
+	set statusline=
+	set statusline+=%1*            " User1 highlight
+	set statusline+=\ [%n]         " Buffer number
+	set statusline+=\ %{GetGitBranchName()}        " Git branch name
+	set statusline+=\ [%f]         " File path
+	set statusline+=%m             " Modified flag
+	set statusline+=%r             " Readonly flag
+	set statusline+=%h             " Help file flag
+	set statusline+=%w             " Preview window flag
+	set statusline+=%y             " File type
+	set statusline+=[
+	set statusline+=%{&ff}         " File format
+	set statusline+=:
+	set statusline+=%{strlen(&fenc)?&fenc:'none'}  " File encoding
+	set statusline+=]
+	set statusline+=%=             " Left/Right separator
+	set statusline+=%c             " File encoding
+	set statusline+=,
+	set statusline+=%l             " Current line number
+	set statusline+=/
+	set statusline+=%L             " Total number of lines
+	set statusline+=\ (%P)\        " Percent through file
+endif
+"" }}}
+
+"" highlight ColorColumn ctermbg=magenta
+"" set colorcolumn=81
+
+" NERDTree settings {{{
+let NERDTreeShowHidden = 1
+let NERDTreeMinimalUI = 0
+
+"autocmd VimEnter * NERDTree
+"autocmd VimEnter * wincmd p
+"autocmd BufEnter * NERDTreeMirror
+autocmd VimEnter *
+	\ if argc() == 0 && !exists("s:std_in") |
+	\ NERDTree |
+	\ elseif argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") |
+	\ bd |
+	\ exec 'cd' fnameescape(argv(0)) |
+	\ NERDTree | wincmd p | ene | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+"CTRL-t to toggle tree view with CTRL-t
+nmap <silent> <C-t> :NERDTreeToggle<CR>
+"Set F2 to put the cursor to the nerdtree
+nmap <silent> <F2> :NERDTreeFind<CR>
+let g:NERDTreeMapActivateNode="<F2>"
+let g:NERDTreeMapPreview="<F3>"
+"" }}}
+
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
+augroup filetype_c
+	autocmd!
+	autocmd FileType c,cpp setlocal cindent
+augroup end
+
+" Vimscript file settings {{{
+augroup filetype_vim
+	autocmd!
+	autocmd FileType vim setlocal foldmethod=marker
+
+	autocmd FileType vim setlocal nolinebreak
+
+	" Insert <leader> and <Esc>
+	autocmd FileType vim inoremap <buffer> <C-l> <lt>leader>
+	autocmd FileType vim inoremap <buffer> <C-V><Esc> <lt>Esc>
+	autocmd FileType vim inoremap <buffer> <C-V><CR> <lt>CR>
+
+	autocmd FileType vim nnoremap <buffer> <F5> :source %<CR>
+
+	autocmd FileType vim setlocal keywordprg=:help
+augroup end
+" }}}
+
+" Markdown file settings {{{
+augroup filetype_markdown
+	autocmd!
+	autocmd FileType markdown setlocal wrap
+	autocmd FileType markdown setlocal linebreak
+	autocmd FileType markdown nnoremap <buffer> j gj
+	autocmd FileType markdown nnoremap <buffer> k gk
+augroup end
+" }}}
+
+let g:airline_powerline_fonts = 1
+
+" YCM settings {{{
+"let g:clang_library_path = "/usr/lib64/"
+"let g:clang_complete_copen = 0
+"let g:clang_hl_errors = 1
+"let g:clang_snippets = 1
+"let g:clang_snippets_engine = "ultisnips"
+"let g:clang_close_preview = 1
+"let g:clang_complete_macros = 1
+
+"let g:ycm_autoclose_preview_window_after_completion = 1
+"let g:ycm_autoclose_preview_window_after_insertion = 1
+"let g:ycm_use_ultisnips_completer = 1
+"let g:ycm_key_list_select_completion=[]
+"let g:ycm_key_list_previous_completion=[]
+
+"let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+"" let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_config.py"
+" }}}
+
+" path to directory where library can be found
+let g:clang_library_path='/usr/lib/llvm-4.0/lib'
+" or path directly to the library file
+"let g:clang_library_path='/usr/lib64/'
+
+let g:netrw_altv = 1
+
+let g:load_doxygen_syntax = 1
+
+let g:ctrlp_map = '<c-u>'
+
+" Mapping settings {{{
+	" Fast saving and closing
+	nnoremap <leader><leader> :w<cr>
+	nnoremap <leader>q :q!<cr>
+	nnoremap <leader>w :wq<cr>
+
+	" Automatic toggling between line number modes
+	nmap <silent> <C-n> :set relativenumber!<CR>
+" }}}
+"
+function! GetGitBranchName()
+	let branchName = ""
+
+	if exists("g:loaded_fugitive")
+		let branchName = "[" . fugitive#head() . "]"
+	endif
+
+	return branchName
+endfunction
+
