@@ -1,3 +1,62 @@
 [user]
 	email = bigey@etud.insa-toulouse.fr
-	name = terae
+	name = Terae
+
+[color]
+	ui = true
+[color "branch"]
+	current = green
+[color "diff"]
+	new = green
+	old = red
+
+	newMoved = cyan
+	oldMoved = blue
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = red
+
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore_global
+
+[push]
+	default = simple
+	followTags = true
+
+[pull]
+	rebase = true
+
+[rebase]
+	autostash = true
+
+[alias]
+	co = checkout
+	count = shortlog -sn
+	su = submodule update --init --recursive
+	# Undo the last commit
+	undo = reset --soft HEAD^
+	active-branch = rev-parse --abbrev-ref HEAD
+	up = !sh -c 'git pull --rebase --prune && git log --pretty=format:\"%Cred%ae %Creset- %C(yellow)%s %Creset(%ar)\" HEAD@{1}..'
+	amend = commit --amend -C HEAD
+	# Show the diff of everything you haven't pushed yet
+	unpushed = "!f() { \
+		branch=$(git active-branch); \
+		git diff origin/$branch..HEAD; \
+	}; f"
+
+	retag = "!f() { \
+		git tag -d "$1" &> /dev/null; \
+		git tag $1; \
+	}; f"
+
+[url "git@github.com"]
+	pushInsteadOf = https://github.com/
+[github]
+	user = Terae
+
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+

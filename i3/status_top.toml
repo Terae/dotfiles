@@ -16,6 +16,12 @@ name = "awesome"
 #bat_discharging = " |v| "
 
 [[block]]
+block = "todo"
+#format = "{size} - ({number}) '{text}'"
+#filename = "~/Documents/todo.txt"
+#interval = 1
+
+[[block]]
 block = "net"
 device = "wlp2s0"
 ssid = true
@@ -25,6 +31,7 @@ graph_up = true
 speed_down = true
 graph_down = true
 interval = 5
+on_click = "xterm -e nmtui"
 
 [[block]]
 block = "time"

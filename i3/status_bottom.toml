@@ -15,6 +15,10 @@ name = "awesome"
 #bat_charging = " |^| "
 #bat_discharging = " |v| "
 
+[[block]]
+block = "music"
+player = "VLC"
+buttons = ["play", "next"]
 
 [[block]]
 block = "toggle"
@@ -44,6 +48,7 @@ interval = 1
 block = "cpu"
 interval = 1
 frequency = true
+on_click = "gnome-system-monitor"
 
 [[block]]
 block = "temperature"
@@ -72,4 +77,4 @@ block = "battery"
 device = "BAT1"
 interval = 10
 show = "percentage"
-
+on_click = "gnome-power-statistics"
