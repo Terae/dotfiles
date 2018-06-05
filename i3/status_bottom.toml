@@ -71,5 +71,5 @@ format_swap = "{SUp}%"
 block = "battery"
 device = "BAT1"
 interval = 10
-show = "both"
+show = "percentage"
 

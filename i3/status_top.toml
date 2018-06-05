@@ -1,7 +1,8 @@
 [theme]
-#name = "solarized-dark"
-name = "slick"
+name = "solarized-dark"
+#name = "slick"
 [theme.overrides]
+#separator = " ◀"
 separator_fg = "#000000"
 #idle_bg = "#123456"
 #idle_fg = "#abcdef"

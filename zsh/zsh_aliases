@@ -94,7 +94,7 @@ alias cdliu='cd ~/Documents/INSA/3ème\ année\ MIC/1er\ semestre\ Sweden/'
 alias cdinsa='cd ~/Documents/INSA/3ème\ année\ MIC/2ème\ semestre/'
 alias cdrobot='cd ~/Programs/ClubRobot/info'
 
-alias mdtopdf='pandoc -s -S --latex-engine=xelatex --template=report.latex -f markdown'
+alias mdtopdf='echo "please run: firefox output.pdf" && pandoc -s -S -V geometry:margin=1in -f markdown -o output.pdf'
 
 alias path='printf "%b\n" "${PATH//:/\\n}"'
 
@@ -103,3 +103,18 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 
 # IP addresses
 alias pubip="dig +short myip.opendns.com @resolver1.opendns.com"
+
+alias yolo='git commit -m "$(curl www.whatthecommit.com/index.txt)"'
+
+brightness() {
+	level=750
+	if `test $# -eq 1`; then
+		if ( [[ "$1" =~ ^[-+]?[0-9]+$ ]] ); then
+			level="$1"
+		else
+			echo "Usage: $0 <level from 0 to 750>"
+		fi
+	fi
+	echo "$level" > /sys/class/backlight/intel_backlight/brightness
+}
+

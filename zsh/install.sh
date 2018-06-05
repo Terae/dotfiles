@@ -9,8 +9,12 @@ install_if_needed curl
 install_if_needed git
 install_if_needed zsh
 
-info "Installation of Oh-my-zsh"
-curl -L http://install.ohmyz.sh | sh
+info "Installation of antigen"
+mkdir -p ~/.antigen
+curl -L git.io/antigen .antigen/antigen.zsh
+
+#info "Installation of Oh-my-zsh"
+#curl -L http://install.ohmyz.sh | sh
 
 cp "$home"/zsh/zsh_aliases ~/.zsh_aliases
 cp "$home"/zsh/zshrc ~/.zshrc
