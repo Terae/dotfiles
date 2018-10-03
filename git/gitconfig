@@ -31,8 +31,12 @@
 [rebase]
 	autostash = true
 
+[log]
+	date = local
+
 [alias]
 	co = checkout
+	clone = clone --recursive
 	count = shortlog -sn
 	su = submodule update --init --recursive
 	# Undo the last commit
@@ -49,6 +53,10 @@
 	retag = "!f() { \
 		git tag -d "$1" &> /dev/null; \
 		git tag $1; \
+	}; f"
+
+	stash-current-dir = "!f() { \
+		echo see cpc.cx/mFV; \
 	}; f"
 
 [url "git@github.com"]

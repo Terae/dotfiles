@@ -83,18 +83,17 @@ alias nano='nano -AimS'
 alias briques='lbreakout2 &'
 
 alias halloween='clear;echo -e "\n\n                        _...---..._\n                      ,\`_          _\`.\n                     / / \`.     , \` \\ \\ \n                    :  \\___\`._, \`___/  :\n           _        |  ..   /_\\   ,,   |        _\n          /  \\      :   \\\`-.___.- \`/   :       /,\\ \n         /, \` \\      \\   \`._____, \`   /       /:  \\ \n         |O)  |       \`.__..---..__. \`        || ,| \n      _  ||  .|  _   _   _  || O|  _   _   _  |\` ||  _\n     /,\\ |\`|  | /.\\ /;\\ /,\\ |\` ;| /\`\\ /.\\ /,\\ | ,O| /\`\\ \n    _|_|_|____|_|_|_|_|_|_|_|_\`_|_|_|_|_|_|_|_|___|_|_|_\n    -=o===-.   __  -___/___\\___  ,-==O==-\` _ -.__ ---  _\n    ___,-___-____\`_|           |___.__-o__\`_________-.__\n     |,| | ; |  ||||   HAPPY   || | | |,| |\`| | ,|| |\`|\n     |o| | | |  |\`|| HALLOWEEN || |;| ||| |,| | |\`| |;|\n    _|_|_|___|__|_||___________||_|_|_|_|_|_|_|___|_|_|_\n     __,--. -.___,--.  \`-==O=-._  ._ ,-   -- _ --=o=-._\n    ____-o________-__-\`___\`_-________.___-______,-._____\n     |,| |,-\`|  |,| |;| |o| |\`-.| |,| |(| |\`| |,-\`| |,|\n";sleep 5;clear;echo -e "\n\n\n\n\n\n\n                               BOUH ! \n\n\n\n\n\n\n"'
-alias clion='clion.sh &'
 alias say='echo "$1" | espeak -v fr -s 50 2>/dev/null'
 
 alias ssh_liu='ssh benbi025@remote-und.ida.liu.se'
 alias ssh_liuX='ssh benbi025@remote-und.ida.liu.se -X'
-alias ssh_ovh='ssh terae@vps509193.ovh.net -p 443' # 64719'
+alias ssh_ovh='ssh terae@vps509193.ovh.net -p 22' # 64719'
 alias ssh_paul='ssh visitor@193.70.84.12 -p 729 -i ~/Documents/key_pauf.txt'
-alias cdliu='cd ~/Documents/INSA/3ème\ année\ MIC/1er\ semestre\ Sweden/'
-alias cdinsa='cd ~/Documents/INSA/3ème\ année\ MIC/2ème\ semestre/'
+alias cdliu='cd ~/Documents/INSA/3A_MIC/1er\ semestre\ Sweden/'
+alias cdinsa='cd ~/Documents/INSA/4A_IR/1er\ semestre/'
 alias cdrobot='cd ~/Programs/ClubRobot/info'
 
-alias mdtopdf='echo "please run: firefox output.pdf" && pandoc -s -S -V geometry:margin=1in -f markdown -o output.pdf'
+alias mdtopdf='echo "please run: firefox output.pdf" && pandoc -s -V geometry:margin=1in -f markdown+smart  -o output.pdf'
 
 alias path='printf "%b\n" "${PATH//:/\\n}"'
 
@@ -117,4 +116,7 @@ brightness() {
 	fi
 	echo "$level" > /sys/class/backlight/intel_backlight/brightness
 }
+
+alias markdown_editor='marker'
+alias print_colors='for code in {0..255}; do echo -e "\e[38;05;${code}m $code: test"; done'
 

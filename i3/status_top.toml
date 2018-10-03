@@ -10,15 +10,12 @@ separator_fg = "#000000"
 [icons]
 name = "awesome"
 [icons.overrides]
-#bat = " | | "
-#bat_full = " |X| "
-#bat_charging = " |^| "
-#bat_discharging = " |v| "
 
 [[block]]
 block = "todo"
-#format = "{size} - ({number}) '{text}'"
-#filename = "~/Documents/todo.txt"
+warning = 8
+format = "{size} - ({number}) '{text}'"
+filename = "~/Documents/todo.txt"
 #interval = 1
 
 [[block]]

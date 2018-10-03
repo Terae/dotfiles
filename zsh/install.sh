@@ -5,13 +5,13 @@ source "$home"/script/installer.sh
 
 print_information "Installation of ZSH"
 
-install_if_needed curl
-install_if_needed git
-install_if_needed zsh
+#install_if_needed curl
+#install_if_needed git
+#install_if_needed zsh
 
 info "Installation of antigen"
 mkdir -p ~/.antigen
-curl -L git.io/antigen .antigen/antigen.zsh
+curl -L git.io/antigen > ~/.antigen/antigen.zsh
 
 #info "Installation of Oh-my-zsh"
 #curl -L http://install.ohmyz.sh | sh

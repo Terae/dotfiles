@@ -22,7 +22,14 @@ git clone https://github.com/rust-lang/rust.vim.git
 git clone https://github.com/ervandew/supertab.git
 git clone https://github.com/ntpeters/vim-better-whitespace.git
 git clone https://github.com/tpope/vim-dispatch.git
+git clone https://github.com/vim-airline/vim-airline.git
+git clone https://github.com/vim-airline/vim-airline-themes.git
+git clone https://github.com/svermeulen/vim-easyclip.git
+git clone https://github.com/plasticboy/vim-markdown.git
+git clone https://github.com/maciakl/vim-neatstatus.git
 git clone https://github.com/sheerun/vim-polyglot.git
+git clone https://github.com/tpope/vim-repeat.git
+git clone https://github.com/kshenoy/vim-signature.git
 git clone https://github.com/mattn/webapi-vim.git
 # git clone https://github.com/Xuyuanp/nerdtree-git-plugin.git
 

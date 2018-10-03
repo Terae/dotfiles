@@ -1,4 +1,5 @@
 execute pathogen#infect()
+call pathogen#helptags()
 
 set rtp+=/usr/lib/python3/dist-packages/powerline/bindings/vim/
 set laststatus=2
@@ -50,6 +51,9 @@ set incsearch
 " List completions
 set wildmode=longest:list,full
 
+inoremap jk <Esc>
+inoremap kj <Esc>
+
 set langmap=йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,ж\\;,э',яz,чx,сc,мv,иb,тn,ьm,ю.,ё',ЙQ,ЦW,УE,КR,ЕT,НY,ГU,ШI,ЩO,ЗP,Х\{,Ъ\},ФA,ЫS,ВD,АF,ПG,РH,ОJ,ЛK,ДL,Ж\:,Э\",ЯZ,ЧX,СC,МV,ИB,ТN,ЬM,Б\<,Ю\>
 set encoding=utf-8 nobomb
 
@@ -74,6 +78,9 @@ set history=50
 " Source vim in working directories
 set exrc
 set secure
+
+" Automaticaly call :RustFmt to format rust code when saving a buffer
+let g:rustfmt_autosave = 1
 " }}}
 
 " Status line settings {{{
@@ -106,6 +113,7 @@ if has("statusline") && !&cp
 endif
 "" }}}
 
+let g:airline_theme='hybridline'
 "" highlight ColorColumn ctermbg=magenta
 "" set colorcolumn=81
 
@@ -131,6 +139,27 @@ nmap <silent> <C-t> :NERDTreeToggle<CR>
 nmap <silent> <F2> :NERDTreeFind<CR>
 let g:NERDTreeMapActivateNode="<F2>"
 let g:NERDTreeMapPreview="<F3>"
+
+" NERDTress File highlighting
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+ exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+ exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+
 "" }}}
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -169,6 +198,7 @@ augroup end
 " }}}
 
 let g:airline_powerline_fonts = 1
+let g:vim_markdown_folding_disabled=1
 
 " YCM settings {{{
 "let g:clang_library_path = "/usr/lib64/"
@@ -199,6 +229,13 @@ let g:netrw_altv = 1
 let g:load_doxygen_syntax = 1
 
 let g:ctrlp_map = '<c-u>'
+
+" Ocaml settins {{{
+filetype indent on
+filetype plugin on
+au BufRead,BufNewFile *.ml,*.mli compiler ocaml
+syntax on
+" }}}
 
 " Mapping settings {{{
 	" Fast saving and closing
