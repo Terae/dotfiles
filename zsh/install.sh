@@ -14,8 +14,8 @@ mkdir -p ~/.antigen
 curl -L git.io/antigen > ~/.antigen/antigen.zsh
 
 #info "Installation of Oh-my-zsh"
-#curl -L http://install.ohmyz.sh | sh
+curl -L http://install.ohmyz.sh | sh
 
-cp "$home"/zsh/zsh_aliases ~/.zsh_aliases
-cp "$home"/zsh/zshrc ~/.zshrc
+#cp "$home"/zsh/zsh_aliases ~/.zsh_aliases
+#cp "$home"/zsh/zshrc ~/.zshrc
 

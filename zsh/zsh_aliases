@@ -89,8 +89,8 @@ alias ssh_liu='ssh benbi025@remote-und.ida.liu.se'
 alias ssh_liuX='ssh benbi025@remote-und.ida.liu.se -X'
 alias ssh_ovh='ssh terae@vps509193.ovh.net -p 22' # 64719'
 alias ssh_paul='ssh visitor@193.70.84.12 -p 729 -i ~/Documents/key_pauf.txt'
-alias cdliu='cd ~/Documents/INSA/3A_MIC/1er\ semestre\ Sweden/'
-alias cdinsa='cd ~/Documents/INSA/4A_IR/1er\ semestre/'
+alias cdliu='cd ~/Documents/INSA/3A_MIC/1er_semestre_Sweden/'
+alias cdinsa='cd ~/Documents/INSA/4A_IR/1er_semestre/'
 alias cdrobot='cd ~/Programs/ClubRobot/info'
 
 alias mdtopdf='echo "please run: firefox output.pdf" && pandoc -s -V geometry:margin=1in -f markdown+smart  -o output.pdf'
@@ -120,3 +120,4 @@ brightness() {
 alias markdown_editor='marker'
 alias print_colors='for code in {0..255}; do echo -e "\e[38;05;${code}m $code: test"; done'
 
+alias space='df -h'

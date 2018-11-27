@@ -7,6 +7,8 @@ print_information "Installation of i3"
 
 install_if_needed i3-wm
 install_if_needed i3
+install_if_needed compton
+install_if_needed rofi
 #install_if_needed fonts-powerline
 #install_if_needed powerline
 
@@ -16,15 +18,20 @@ cd ~/.config/i3
 
 cp "$home"/i3/config .
 
-# Rust setup
-which cargo > /dev/null
-if [ "$1" != 0 ]; then
-	curl https://sh.rustup.rs -sSf | sh
-fi
+cd /tmp
+git clone https;..github.com/meskarune/i3lock-fancy.git
+cd i3lock-fancy
+sudo make install
 
-git clone https://github.com/XYunknown/i3status-rust.git
-cd i3status-rust && cargo build --release
-cp "$home"/i3/config.toml ~/.config/i3/i3status-rust/config.toml
+# Rust setup
+#which cargo > /dev/null
+#if [ "$1" != 0 ]; then
+#	curl https://sh.rustup.rs -sSf | sh
+#fi
+
+#git clone https://github.com/XYunknown/i3status-rust.git
+#cd i3status-rust && cargo build --release
+#cp "$home"/i3/config.toml ~/.config/i3/i3status-rust/config.toml
 
 sudo usermod -a -G video "$(id -u -n)"
 sudo cp backlight.rules /etc/udev/rules.d/

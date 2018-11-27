@@ -51,9 +51,6 @@ set incsearch
 " List completions
 set wildmode=longest:list,full
 
-inoremap jk <Esc>
-inoremap kj <Esc>
-
 set langmap=йq,цw,уe,кr,еt,нy,гu,шi,щo,зp,х[,ъ],фa,ыs,вd,аf,пg,рh,оj,лk,дl,ж\\;,э',яz,чx,сc,мv,иb,тn,ьm,ю.,ё',ЙQ,ЦW,УE,КR,ЕT,НY,ГU,ШI,ЩO,ЗP,Х\{,Ъ\},ФA,ЫS,ВD,АF,ПG,РH,ОJ,ЛK,ДL,Ж\:,Э\",ЯZ,ЧX,СC,МV,ИB,ТN,ЬM,Б\<,Ю\>
 set encoding=utf-8 nobomb
 
@@ -82,6 +79,10 @@ set secure
 " Automaticaly call :RustFmt to format rust code when saving a buffer
 let g:rustfmt_autosave = 1
 " }}}
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
 
 " Status line settings {{{
 " Always show status line
@@ -164,10 +165,25 @@ call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
+" C & C++ settings {{{
 augroup filetype_c
 	autocmd!
 	autocmd FileType c,cpp setlocal cindent
+	" Problem: the actual implementation of `/usr/share/clang/clang-format.py`
+	" does not allow to give the path of a configuration path.
+	"let g:syntastic_cpp_checkers = ['clang_tidy']
+	let g:syntastic_c_checkers = ['clang_tidy']
+	let g:syntastic_cpp_clang_tidy_args = '-extra-arg=--std=c++17 -header-filter=".*" -checks="*,-android-*,-bugprone-bool-pointer-implicit-conversion,-cert-env33-c,-cert-dcl50-cpp,-cert-dcl59-cpp,-cppcoreguidelines-no-malloc,-cppcoreguidelines-owning-memory,-cppcoreguidelines-pro-bounds-array-to-pointer-decay,-cppcoreguidelines-pro-bounds-constant-array-index,-cppcoreguidelines-pro-bounds-pointer-arithmetic,-cppcoreguidelines-pro-type-const-cast,-cppcoreguidelines-pro-type-cstyle-cast,-cppcoreguidelines-pro-type-reinterpret-cast,-cppcoreguidelines-pro-type-union-access,-cppcoreguidelines-pro-type-vararg,-cppcoreguidelines-special-member-functions,-fuchsia-*,-google-*,google-default-arguments,google-explicit-constructor,google-runtime-member-string-references,google-runtime-operator,-hicpp-braces-around-statements,-hicpp-named-parameter,-hicpp-no-array-decay,-hicpp-no-assembler,-hicpp-no-malloc,-hicpp-function-size,-hicpp-special-member-functions,-hicpp-vararg,-llvm-*,-objc-*,-readability-magic-numbers,-readability-else-after-return,-readability-implicit-bool-conversion,-readability-named-parameter,-readability-simplify-boolean-expr,-readability-braces-around-statements,-readability-identifier-naming,-readability-function-size,-readability-redundant-member-init,-misc-bool-pointer-implicit-conversion,-misc-definitions-in-headers,-misc-unused-alias-decls,-misc-unused-parameters,-misc-unused-using-decls,-modernize-use-using,-modernize-use-default-member-init,-clang-analyzer-*"' " -clang-diagnostic-*
+
+	map <C-K> :pyf /usr/share/clang/clang-format.py<cr>
+	imap <C-K> <c-o> :pyf /usr/share/clang/clang-format.py<cr>
+	function! FormatOnSave()
+		let l:formatdiff = 1
+		pyf /usr/share/clang/clang-format.py
+	endfunction
+	autocmd BufWritePre *.h,*.cc,*.cpp call FormatOnSave()
 augroup end
+" }}}
 
 " Vimscript file settings {{{
 augroup filetype_vim
@@ -220,9 +236,9 @@ let g:vim_markdown_folding_disabled=1
 " }}}
 
 " path to directory where library can be found
-let g:clang_library_path='/usr/lib/llvm-4.0/lib'
+"let g:clang_library_path='/usr/lib/llvm-4.0/lib'
 " or path directly to the library file
-"let g:clang_library_path='/usr/lib64/'
+let g:clang_library_path='/usr/lib64/'
 
 let g:netrw_altv = 1
 
@@ -235,6 +251,58 @@ filetype indent on
 filetype plugin on
 au BufRead,BufNewFile *.ml,*.mli compiler ocaml
 syntax on
+
+set rtp+=/home/terae/.opam/system/share/ocp-index/vim
+set rtp^="/home/terae/.opam/system/share/ocp-indent/vim"
+
+let g:syntastic_ocaml_checkers = ['merlin']
+
+" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
+let s:opam_share_dir = system("opam config var share")
+let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
+
+let s:opam_configuration = {}
+
+function! OpamConfOcpIndent()
+  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
+endfunction
+let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
+
+function! OpamConfOcpIndex()
+  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
+endfunction
+let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
+
+function! OpamConfMerlin()
+  let l:dir = s:opam_share_dir . "/merlin/vim"
+  execute "set rtp+=" . l:dir
+endfunction
+let s:opam_configuration['merlin'] = function('OpamConfMerlin')
+
+let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
+let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
+let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
+for tool in s:opam_packages
+  " Respect package order (merlin should be after ocp-index)
+  if count(s:opam_available_tools, tool) > 0
+    call s:opam_configuration[tool]()
+  endif
+endfor
+" ## end of OPAM user-setup addition for vim / base ## keep this line
+" ## added by OPAM user-setup for vim / ocp-indent ## 870849d1e2d624149762e89fa14ca869 ## you can edit, but keep this line
+if count(s:opam_available_tools,"ocp-indent") == 0
+	source "/home/terae/.opam/default/share/ocp-indent/vim/indent/ocaml.vim"
+endif
+" ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
+
+set rtp+=<SHARE_DIR>/merlin/vim
+
+" only show the expected type when there are more than one candidate
+let g:merlin_completion_arg_type = "several"
+
+" Automatic completion with Supertab
+au FileType ocaml call SuperTabSetDefaultCompletionType("<c-x><c-o>")
+
 " }}}
 
 " Mapping settings {{{
@@ -245,6 +313,20 @@ syntax on
 
 	" Automatic toggling between line number modes
 	nmap <silent> <C-n> :set relativenumber!<CR>
+
+	" Deactivation of the directional keys
+	"map <up> <nop>
+	"map <down> <nop>
+	"map <left> <nop>
+	"map <right> <nop>
+	"imap <up> <nop>
+	"imap <down> <nop>
+	"imap <left> <nop>
+	"imap <right> <nop>
+	" map jk <Esc>
+	" map kj <Esc>
+	inoremap jk <Esc>
+	inoremap kj <Esc>
 " }}}
 "
 function! GetGitBranchName()

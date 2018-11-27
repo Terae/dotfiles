@@ -82,15 +82,6 @@ export EDITOR='vim'
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
 if [ -f ~/.zsh_aliases ]; then
 	. ~/.zsh_aliases
 fi
@@ -107,7 +98,6 @@ antigen bundles <<EOBUNDLES
 cargo
 extract
 git
-globalias
 git-prompt
 colored-man-pages
 common-alias
@@ -118,6 +108,7 @@ rust
 web-search
 transfer
 #thefuck
+heroku
 
 zsh-users/zsh-completions
 alexrochas/zsh-extract
@@ -132,3 +123,6 @@ antigen theme ys
 
 antigen apply
 export GPG_TTY=$(tty)
+
+# opam configuration
+test -r /home/terae/.opam/opam-init/init.zsh && . /home/terae/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true

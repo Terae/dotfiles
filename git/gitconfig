@@ -1,6 +1,7 @@
 [user]
 	email = bigey@etud.insa-toulouse.fr
 	name = Terae
+	signingkey = 95EE4C5E3974AC05
 
 [color]
 	ui = true
@@ -59,12 +60,12 @@
 		echo see cpc.cx/mFV; \
 	}; f"
 
-[url "git@github.com"]
-	pushInsteadOf = https://github.com/
 [github]
 	user = Terae
 
-[branch "master"]
-	remote = origin
-	merge = refs/heads/master
+#[branch "master"]
+	#remote = origin
+	#merge = refs/heads/master
 
+#[commit]
+#	gpgSign = true
