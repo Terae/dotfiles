@@ -1,34 +1,52 @@
 #!/bin/bash
 
-### See cpc.cx/jQ3
+UBUNTU_VERSION=$(lsb_release -d | cut -f2 | cut -d' ' -f2)
+UBUNTU_VERSION="${UBUNTU_VERSION:0:5}"
+if [[ "${UBUNTU_VERSION}" == "17.04" ]]; then
+	echo "Migration from Zesty (17.04) to Bionic (18.04)"
+	sudo sed -i 's/zesty/bionic/g' /etc/apt/sources.list
+	sudo apt purge 'nvidia.*'
+	sudo apt-add-repository ppa:graphics-drivers/ppa
+	sudo apt update
+	sudo apt install nvidia-384 nvidia-prime intel-microcode
+fi
 
-# Install graphic drivers
-#sudo apt purge 'nvidia.*'
-#sudo apt-add-repository ppa:graphics-drivers/ppa
-#sudo apt update
-#sudo apt install nvidia-381 nvidia-prime intel-microcode
+# System diagnostic tool
+sudo add-apt-repository -y ppa:oguzhaninan/stacer
 
-# Auto-mount storage partition
-#sudo apt-get install ntfs-3g
-#sudo mkdir /media/storage
-#sudo cp /etc/fstab /etc/fstab.backup
-#sudo blkid
-echo "Copier l'UUID de /dev/sdb1"
-echo "Ecrire 'sudo vim /etc/fstab'"
-echo "rajouter la ligne 'UUID=???????????? /media/storage/ ntfs-3g auto,user,rw,exec 0 0"
+# Signal
+curl -s https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
+echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" | sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
 
-p=/media/storage/terae
+sudo apt update && sudo apt upgrade -y
 
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt install zsh
-sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+sudo apt install -y vim git curl wget cmake libbox2d-dev gcc-7 g++-7 libbluetooth-dev build-essential libglu1-mesa-dev libgtkmm-3.0-dev libusb-1.0-0-dev clang-format libirrlicht-dev gcc-7-arm-linux-gnueabihf g++-7-arm-linux-gnueabihf net-tools dnsmasq-base i3-wm firefox thunderbird dia nitrogen pulseaudio pandoc rofi pavucontrol numlockx virt-manager qemu vde2 ebtables bridge-utils netcat vlc qtwayland5 inkscape unity-tweak-tool stacer calibre i3lock i3lock-fancy meson pkg-config libgtk-3-dev libgtksourceview-3.0-dev libwebkit2gtk-4.0-dev libgtkspell3-3-dev wireshark signal-desktop compton xcompmgr gdb-multiarch gcc-arm-none-eabi openocd libdvdnav4 libdvdread4 gstreamer1.0-plugins-bad gstreamer1.0-plugins-ugly libdvd-pkg python3-pip gparted astyle fonts-powerline
+
+sudo service libvirtd start
+
+if [ ! -d "~/.rustup" ]; then
+	curl https://sh.rustup.rs -sSf | sh
+	cargo install mdbook
+	rustup component add rustfmt-preview
+    rustup target add thumbv7m-none-eabi
+fi
+
+sudo wget https://cht.sh/:cht.sh -O /usr/local/bin/cht.sh
+sudo chmod o+x /usr/local/bin/cht.sh
 
 cd /tmp
-git clone https://github.com/meskarune/i3lock-fancy.git
-cd i3lock-fancy
+git clone https://github.com/fabiocolacio/Marker.git
+cd Marker
+git submodule update --init --recursive
+mkdir build && cd build
+meson .. --prefix /usr/local
+ninja
+sudo ninja install
+
+cd /tmp
+git clone https://github.com/haikarainen/light.git
+cd light
+./autogen.sh && ./configure && make
 sudo make install
 
-sudo apt install thunderbird firefox atom cmake dia git nitrogen pulseaudio pandoc vim rofi curl pavucontrol numlockx ruby ocaml box2d libirrlicht-dev clang opam
-sudo ln -s $p/Downloads/Linux/IDEs/clion-2018.2.3/bin/clion.sh /usr/local/bin/clion
-sudo ln -s $p/Downloads/Linux/IDEs/idea-IU-172.3968.16/bin/idea.sh /usr/local/bin/idea
+pip3 install --user pipenv

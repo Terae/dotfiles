@@ -27,6 +27,7 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set noexpandtab
+set expandtab
 
 filetype plugin on
 syntax on
@@ -68,6 +69,7 @@ set lbr
 
 " Change colorscheme from default to delek
 colorscheme elflord
+"colorscheme nord
 
 " Save 50 lines of command-line (etc) history
 set history=50
@@ -76,6 +78,11 @@ set history=50
 set exrc
 set secure
 
+" abbreviations
+abclear
+iab #i #include
+iab #d #define
+
 " Automaticaly call :RustFmt to format rust code when saving a buffer
 let g:rustfmt_autosave = 1
 " }}}
@@ -83,6 +90,23 @@ let g:rustfmt_autosave = 1
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
+
+" Spell checking {{{
+autocmd BufNewFile,BufRead *.md,*.tex,*.latex,*.tex set spell spelllang=en
+function! ToggleSpellLang()
+    if !&spell
+        :set spelllang=en
+        :set spell
+    elseif &spelllang =~# 'en'
+        :set spelllang=fr
+    elseif &spelllang =~# 'fr'
+        :set spelllang=en
+        :set spell!
+    endif
+endfunction
+
+nnoremap <F7> :call ToggleSpellLang()<CR> " toggle language
+" }}}
 
 " Status line settings {{{
 " Always show status line
@@ -165,6 +189,19 @@ call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
+" augroups
+augroup indents
+    autocmd!
+    autocmd FileType less,css,html setlocal ts=2 sts=2 sw=2 expandtab
+    autocmd FileType text,markdown setlocal expandtab
+augroup END
+
+augroup highlight_follows_vim
+    autocmd!
+    autocmd FocusGained * set cursorline
+    autocmd FocusLost * set nocursorline
+augroup END
+
 " C & C++ settings {{{
 augroup filetype_c
 	autocmd!
@@ -181,7 +218,7 @@ augroup filetype_c
 		let l:formatdiff = 1
 		pyf /usr/share/clang/clang-format.py
 	endfunction
-	autocmd BufWritePre *.h,*.cc,*.cpp call FormatOnSave()
+	"autocmd BufWritePre *.h,*.cc,*.cpp call FormatOnSave()
 augroup end
 " }}}
 
@@ -246,64 +283,64 @@ let g:load_doxygen_syntax = 1
 
 let g:ctrlp_map = '<c-u>'
 
-" Ocaml settins {{{
-filetype indent on
-filetype plugin on
-au BufRead,BufNewFile *.ml,*.mli compiler ocaml
-syntax on
-
-set rtp+=/home/terae/.opam/system/share/ocp-index/vim
-set rtp^="/home/terae/.opam/system/share/ocp-indent/vim"
-
-let g:syntastic_ocaml_checkers = ['merlin']
-
-" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
-let s:opam_share_dir = system("opam config var share")
-let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
-
-let s:opam_configuration = {}
-
-function! OpamConfOcpIndent()
-  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
-endfunction
-let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
-
-function! OpamConfOcpIndex()
-  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
-endfunction
-let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
-
-function! OpamConfMerlin()
-  let l:dir = s:opam_share_dir . "/merlin/vim"
-  execute "set rtp+=" . l:dir
-endfunction
-let s:opam_configuration['merlin'] = function('OpamConfMerlin')
-
-let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
-let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
-let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
-for tool in s:opam_packages
-  " Respect package order (merlin should be after ocp-index)
-  if count(s:opam_available_tools, tool) > 0
-    call s:opam_configuration[tool]()
-  endif
-endfor
-" ## end of OPAM user-setup addition for vim / base ## keep this line
-" ## added by OPAM user-setup for vim / ocp-indent ## 870849d1e2d624149762e89fa14ca869 ## you can edit, but keep this line
-if count(s:opam_available_tools,"ocp-indent") == 0
-	source "/home/terae/.opam/default/share/ocp-indent/vim/indent/ocaml.vim"
-endif
-" ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
-
-set rtp+=<SHARE_DIR>/merlin/vim
-
-" only show the expected type when there are more than one candidate
-let g:merlin_completion_arg_type = "several"
-
-" Automatic completion with Supertab
-au FileType ocaml call SuperTabSetDefaultCompletionType("<c-x><c-o>")
-
-" }}}
+"" Ocaml settins {{{
+"filetype indent on
+"filetype plugin on
+"au BufRead,BufNewFile *.ml,*.mli compiler ocaml
+"syntax on
+"
+"set rtp+=/home/terae/.opam/system/share/ocp-index/vim
+"set rtp^="/home/terae/.opam/system/share/ocp-indent/vim"
+"
+"let g:syntastic_ocaml_checkers = ['merlin']
+"
+"" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
+"let s:opam_share_dir = system("opam config var share")
+"let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
+"
+"let s:opam_configuration = {}
+"
+"function! OpamConfOcpIndent()
+"  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
+"endfunction
+"let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
+"
+"function! OpamConfOcpIndex()
+"  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
+"endfunction
+"let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
+"
+"function! OpamConfMerlin()
+"  let l:dir = s:opam_share_dir . "/merlin/vim"
+"  execute "set rtp+=" . l:dir
+"endfunction
+"let s:opam_configuration['merlin'] = function('OpamConfMerlin')
+"
+"let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
+"let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
+"let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
+"for tool in s:opam_packages
+"  " Respect package order (merlin should be after ocp-index)
+"  if count(s:opam_available_tools, tool) > 0
+"    call s:opam_configuration[tool]()
+"  endif
+"endfor
+"" ## end of OPAM user-setup addition for vim / base ## keep this line
+"" ## added by OPAM user-setup for vim / ocp-indent ## 870849d1e2d624149762e89fa14ca869 ## you can edit, but keep this line
+"if count(s:opam_available_tools,"ocp-indent") == 0
+"	source "/home/terae/.opam/default/share/ocp-indent/vim/indent/ocaml.vim"
+"endif
+"" ## end of OPAM user-setup addition for vim / ocp-indent ## keep this line
+"
+"set rtp+=<SHARE_DIR>/merlin/vim
+"
+"" only show the expected type when there are more than one candidate
+"let g:merlin_completion_arg_type = "several"
+"
+"" Automatic completion with Supertab
+"au FileType ocaml call SuperTabSetDefaultCompletionType("<c-x><c-o>")
+"
+"" }}}
 
 " Mapping settings {{{
 	" Fast saving and closing
@@ -339,3 +376,9 @@ function! GetGitBranchName()
 	return branchName
 endfunction
 
+" Same clipboard between vim and the system
+if v:version > 703
+	if exists('+clipboard')
+		set clipboard=unnamedplus
+	endif
+endif

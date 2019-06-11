@@ -90,7 +90,7 @@ alias ssh_liuX='ssh benbi025@remote-und.ida.liu.se -X'
 alias ssh_ovh='ssh terae@vps509193.ovh.net -p 22' # 64719'
 alias ssh_paul='ssh visitor@193.70.84.12 -p 729 -i ~/Documents/key_pauf.txt'
 alias cdliu='cd ~/Documents/INSA/3A_MIC/1er_semestre_Sweden/'
-alias cdinsa='cd ~/Documents/INSA/4A_IR/1er_semestre/'
+alias cdinsa='cd ~/Documents/INSA/4A_IR/2eme_semestre/'
 alias cdrobot='cd ~/Programs/ClubRobot/info'
 
 alias mdtopdf='echo "please run: firefox output.pdf" && pandoc -s -V geometry:margin=1in -f markdown+smart  -o output.pdf'
@@ -121,3 +121,8 @@ alias markdown_editor='marker'
 alias print_colors='for code in {0..255}; do echo -e "\e[38;05;${code}m $code: test"; done'
 
 alias space='df -h'
+alias change_brightness='sudo vim /sys/class/backlight/intel_backlight/brightness'
+alias activate_EtudiantINSA='nmcli connection add \
+                             type wifi con-name "EtudiantINSA" ifname wlp4s0 ssid "EtudiantINSA" -- \
+                             wifi-sec.key-mgmt wpa-eap 802-1x.eap ttls \
+                             802-1x.phase2-auth mschapv2 802-1x.identity "terae"'

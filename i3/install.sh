@@ -19,7 +19,7 @@ cd ~/.config/i3
 cp "$home"/i3/config .
 
 cd /tmp
-git clone https;..github.com/meskarune/i3lock-fancy.git
+git clone https://github.com/meskarune/i3lock-fancy.git
 cd i3lock-fancy
 sudo make install
 
@@ -33,8 +33,8 @@ sudo make install
 #cd i3status-rust && cargo build --release
 #cp "$home"/i3/config.toml ~/.config/i3/i3status-rust/config.toml
 
-sudo usermod -a -G video "$(id -u -n)"
-sudo cp backlight.rules /etc/udev/rules.d/
+#sudo usermod -a -G video "$(id -u -n)"
+#sudo cp backlight.rules /etc/udev/rules.d/
 
 i3 reload
 

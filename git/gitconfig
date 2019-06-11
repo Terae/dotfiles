@@ -4,15 +4,28 @@
 	signingkey = 95EE4C5E3974AC05
 
 [color]
+	advice = true
+	branch = true
+	diff = true
+	grep = true
+	interactive = true
+	pager = true
+	push = true
+	showBranch = true
+	status = true
+	transport = true
 	ui = true
+
 [color "branch"]
 	current = green
+
 [color "diff"]
 	new = green
 	old = red
 
 	newMoved = cyan
 	oldMoved = blue
+
 [color "status"]
 	added = green
 	changed = yellow
@@ -21,19 +34,52 @@
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore_global
+	commitGraph = true
+
+[diff]
+	algorithm = histogram
+	tool = vimdiff
+	colorMoved = default
+	renames = copy
+	mnemonicPrefix = true
+	wsErrorHighlight = all
+
+[grep]
+	lineNumber = true
 
 [push]
 	default = simple
 	followTags = true
 
 [pull]
-	rebase = true
+	rebase = interactive
 
 [rebase]
+	missingCommitsCheck = warn
 	autostash = true
+	stat = true
+
+[fetch]
+	prune = true
 
 [log]
 	date = local
+	abbrevCommit = true
+	decorate = short
+	showRoot = true
+	mailmap = true
+
+[branch]
+	autoSetupMerge = true
+	autoSetupRebase = always
+
+[column]
+	ui = auto,column
+
+[status]
+	branch = true
+	showStash = true
+	submoduleSummary = true
 
 [alias]
 	co = checkout
@@ -60,8 +106,21 @@
 		echo see cpc.cx/mFV; \
 	}; f"
 
+	which = branch --contains
+	who = shortlog --summary --numbered --no-merges
+	whoami = !"git config --get user.name && git config --get user.email"
+
 [github]
 	user = Terae
+
+[url "git@github.com:"]
+	insteadOf = @gh:
+
+[web]
+	browser = firefox
+
+[svn]
+	rmdir = true
 
 #[branch "master"]
 	#remote = origin
@@ -69,3 +128,9 @@
 
 #[commit]
 #	gpgSign = true
+[filter "kicad_project"]
+	clean = sed -E 's/^update=.*$/update=Date/'
+	smudge = cat
+[filter "kicad_sch"]
+	clean = "sed -E 's/#(PWR|FLG)[0-9]+/#\\1?/'"
+	smudge = cat

@@ -57,18 +57,20 @@ bindsym $mod+Ctrl+m exec pavucontrol
 ################################################################################################
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+#bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
+#bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+bindsym XF86MonBrightnessUp exec "light -k -A 10; notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec "light -k -U 10; notify-send 'brightness down'"
 
 # Start Applications
 bindsym $mod+Ctrl+b exec $term -e 'bmenum
 bindsym $mod+F1 exec firefox
 bindsym $mod+F2 exec thunderbird
-bindsym $mod+F3 exec pcmanfm
+bindsym $mod+F3 exec nautilus
 # bindsym $mod+F3 exec ranger
 bindsym $mod+Shift+F3 exec gksu pcmanfm
 bindsym $mod+F4 exec /usr/local/clion
-bindsym $mod+F5 exec $term -e 'mocp'
+bindsym $mod+F5 exec franz; exec signal-desktop
 bindsym $mod+F6 exec virt-manager
 
 bindsym $mod+t exec --no-startup-id pkill compton
@@ -289,6 +291,8 @@ mode "resize" {
         bindsym Escape mode "default"
 }
 
+bindsym Mod1+Mod4+r exec i3-input -F 'rename workspace to "%s"' -P 'rename current workspace: '
+
 # Lock screen
 bindsym $mod+F12 exec --no-startup-id $lock
 
@@ -310,8 +314,14 @@ exec --no-startup-id xautolock -time 10 -locker $lock
 exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 exec_always /usr/bin/numlockx on
-exec_always --no-startup-id nitrogen --set-zoom ~/Pictures/paperwalls/oeil.jpg
+exec_always --no-startup-id nitrogen --set-zoom ~/Pictures/paperwalls/paperwall.jpg #~/Pictures/paperwalls/oeil.jpg
 exec_always --no-startup-id xrandr --output HDMI-0 --auto --output eDP-1-1 --auto --right-of HDMI-0
+exec_always --no-startup-id xcompmgr -c -F -n
+
+exec_always --no-startup-id workspace $ws1; exec [ $(ps h -C firefox | wc -l) = 0 ] && firefox
+exec_always --no-startup-id workspace $ws2; exec [ $(ps h -C thunderbird | wc -l) = 0 ] && thunderbird
+exec_always --no-startup-id workspace $ws3; exec [ $(ps h -C franz | wc -l) = 0 ] && franz
+exec_always --no-startup-id workspace $ws3; exec [ $(ps h -C signal-desktop | wc -l) = 0 ] && signal-desktop
 
 # Color palette used for the terminal ( ~/.Xresources file )
 # Colors are gathered based on the documentation:
@@ -347,7 +357,7 @@ set_from_resource $term_color15    color15
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
 	i3bar_command i3bar
-	status_command i3status
+	status_command i3status #--config ~/.config/i3/i3status.conf
 	position bottom
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
