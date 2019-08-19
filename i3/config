@@ -65,7 +65,7 @@ bindsym XF86MonBrightnessDown exec "light -k -U 10; notify-send 'brightness down
 # Start Applications
 bindsym $mod+Ctrl+b exec $term -e 'bmenum
 bindsym $mod+F1 exec firefox
-bindsym $mod+F2 exec thunderbird
+bindsym $mod+F2 exec thunderbird; exec protonmail-bridge
 bindsym $mod+F3 exec nautilus
 # bindsym $mod+F3 exec ranger
 bindsym $mod+Shift+F3 exec gksu pcmanfm
