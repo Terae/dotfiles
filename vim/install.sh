@@ -9,6 +9,14 @@ install_if_needed curl
 install_if_needed git
 install_if_needed vim
 
+cp "$home"/vim/vimrc ~/.vimrc
+
+info "Installation of vim::Vundle"
+mkdir -p ~/.vim/bundle && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+vim +PluginInstall +qall
+
+exit
+
 info "Installation of vim::pathogen"
 mkdir -p ~/.vim/autoload ~/.vim/bundle && curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 
@@ -32,6 +40,4 @@ git clone https://github.com/tpope/vim-repeat.git
 git clone https://github.com/kshenoy/vim-signature.git
 git clone https://github.com/mattn/webapi-vim.git
 # git clone https://github.com/Xuyuanp/nerdtree-git-plugin.git
-
-cp "$home"/vim/vimrc ~/.vimrc
 
