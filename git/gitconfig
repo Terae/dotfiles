@@ -1,5 +1,5 @@
 [user]
-	email = bigey@etud.insa-toulouse.fr
+	email = Terae@protonmail.com
 	name = Terae
 	signingkey = 95EE4C5E3974AC05
 
@@ -109,6 +109,8 @@
 	which = branch --contains
 	who = shortlog --summary --numbered --no-merges
 	whoami = !"git config --get user.name && git config --get user.email"
+	ours   = !git checkout --ours $@ && git add $@
+	theirs = !git checkout --theirs $@ && git add $@
 
 [github]
 	user = Terae
