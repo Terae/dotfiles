@@ -103,26 +103,26 @@ source "$HOME/.antigen/antigen.zsh"
 antigen use oh-my-zsh
 
 # Bundles from the default repo (robbyrussell's oh-my-zsh)
-#antigen bundles <<EOBUNDLES
-#cargo
-#extract
-#git
-#git-prompt
-#colored-man-pages
-#common-alias
-#command-not-found
-#pip
-#python
-#rust
-#web-search
-#transfer
-##thefuck
-#
-#zsh-users/zsh-completions
-#alexrochas/zsh-extract
-#zsh-users/zsh-syntax-highlighting
-#zsh-users/zsh-autosuggestions
-#EOBUNDLES
+antigen bundles <<EOBUNDLES
+cargo
+extract
+git
+git-prompt
+colored-man-pages
+common-alias
+command-not-found
+pip
+python
+rust
+web-search
+transfer
+#thefuck
+
+zsh-users/zsh-completions
+alexrochas/zsh-extract
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-autosuggestions
+EOBUNDLES
 
 antigen theme ys
 
