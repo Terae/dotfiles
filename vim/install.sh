@@ -16,6 +16,9 @@ mkdir -p ~/.vim/bundle && git clone https://github.com/VundleVim/Vundle.vim.git 
 cp autocorrect.vim ~/.vim/autocorrect.vim
 vim +PluginInstall +qall
 
+cd ~/.vim/bundle/YouCompleteMe
+python install.py --clang-completer --rust-completer
+
 exit
 
 info "Installation of vim::pathogen"
