@@ -13,6 +13,7 @@ cp "$home"/vim/vimrc ~/.vimrc
 
 info "Installation of vim::Vundle"
 mkdir -p ~/.vim/bundle && git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+cp autocorrect.vim ~/.vim/autocorrect.vim
 vim +PluginInstall +qall
 
 exit
