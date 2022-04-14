@@ -22,6 +22,8 @@ mkdir ~/.config/i3status-rust
 cd ~/.config/i3status-rust
 cp "$home"/i3/config.toml .
 
+cp "$home"/i3/xsettingsd ~/.xsettingsd
+
 cd /tmp
 git clone https://github.com/meskarune/i3lock-fancy.git
 cd i3lock-fancy

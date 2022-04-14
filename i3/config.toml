@@ -1,4 +1,4 @@
-theme = "solarized-dark"
+theme = "nord-dark"
 icons = "awesome"
 
 [[block]]
@@ -63,7 +63,7 @@ on_click = "gnome-terminal -- /opt/MullvadVPN/mullvad-gui --enable-crashpad"
 [[block]]
 block = "networkmanager"
 on_click = "gnome-terminal -- nmtui"
-interface_name_exclude = ["br\\-[0-9a-f]{12}", "docker\\d+", "wg-mullvad", "tun0"]
+interface_name_exclude = ["br\\-[0-9a-f]{12}", "docker\\d+", "wg-mullvad", "tun?"]
 interface_name_include = []
 ap_format = "{ssid^10}"
 
