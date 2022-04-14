@@ -18,6 +18,10 @@ cd ~/.config/i3
 
 cp "$home"/i3/config .
 
+mkdir ~/.config/i3status-rust
+cd ~/.config/i3status-rust
+cp "$home"/i3/config.toml .
+
 cd /tmp
 git clone https://github.com/meskarune/i3lock-fancy.git
 cd i3lock-fancy
