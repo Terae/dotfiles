@@ -77,7 +77,7 @@ bindsym $super+Return exec --no-startup-id i3-sensible-terminal
 # kill focused window
 bindsym $super+Shift+q kill
 bindsym $alt+F4 kill
-bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+#bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 
 # start dmenu (a program launcher)
 #bindsym $super+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Noto Sans:size=10'"
@@ -117,10 +117,10 @@ bindsym XF86AudioPlay exec mpc toggle
 bindsym XF86AudioStop exec mpc stop
 
 # change focus
-bindsym $super+h focus left
-bindsym $super+j focus down
-bindsym $super+k focus up
-bindsym $super+l focus right
+#bindsym $super+h focus left
+#bindsym $super+j focus down
+#bindsym $super+k focus up
+#bindsym $super+l focus right
 bindsym $super+Left focus left
 bindsym $super+Down focus down
 bindsym $super+Up focus up
@@ -137,7 +137,7 @@ bindsym $super+Shift+Up move up
 bindsym $super+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $super+s split h
+bindsym $super+h split h
 
 # split in vertical orientation
 bindsym $super+v split v
@@ -163,7 +163,7 @@ set $ws4  4:
 set $ws5  5
 set $ws6  6
 set $ws7  7
-set $ws8  8
+set $ws8  8:
 set $ws9  9:
 set $ws10 10:
 
@@ -240,6 +240,7 @@ mode "$mode_system" {
     bindsym s       exec --no-startup-id $locker && systemctl suspend,   mode "default"
     bindsym h       exec --no-startup-id $locker && systemctl hibernate, mode "default"
     bindsym r       exec --no-startup-id systemctl reboot,               mode "default"
+    bindsym p       exec --no-startup-id systemctl poweroff -i,          mode "default"
     bindsym Shift+s exec --no-startup-id systemctl poweroff -i,          mode "default"
 
     # back to normal: Enter or Escape
@@ -278,8 +279,9 @@ for_window [class=".*"] border pixel 2
 #assign [class="Firefox"]                  $ws1
 assign [class="Thunderbird|Proton"]       $ws2
 assign [class="KeePassXC"]                $ws3
-assign [class="Mattermost|Teams|Signal"]  $ws4
+assign [class="Mattermost|Teams|Signal|Element"]  $ws4
 assign [class="Transmission-gtk"]         $ws6
+assign [class="Steam"]                    $ws8
 #assign [class=Thunar|File-roller] 3
 #assign [class=Geany|Evince|Gucharmap|Soffice|libreoffice*] 4
 #assign [class=Audacity|Vlc|mpv|Ghb|Xfburn|Gimp*|Inkscape] 5

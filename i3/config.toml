@@ -92,8 +92,12 @@ if_command = "test -e /sys/class/power_supply/BAT0"
 on_click = "gnome-power-statistics"
 
 [[block]]
+block = "custom"
+command = "sed 's/  //' <(curl 'https://wttr.in/Brax?lang=fr&format=3' -s)"
+interval = 600
+
+[[block]]
 block = "time"
 interval = 5
 format = "%a %d/%m %R"
 on_click = "gnome-control-center"
-
