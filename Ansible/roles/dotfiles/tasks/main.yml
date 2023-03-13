@@ -1,0 +1,32 @@
+---
+- name: Create ~/.bin
+  file: dest="~/.bin" state=directory
+
+- name: Link executables
+  ansible.builtin.file:
+    src: "{{ item }}"
+    dest: "~/.bin/{{ item | basename }}"
+    state: link
+  with_fileglob:
+    - ./bin/*
+
+- name: Symlink dotfiles files
+  ansible.builtin.file:
+    src: "{{ item }}"
+    dest: "~/.{{ item | basename }}"
+    state: link
+  with_fileglob:
+    - ./dotfiles/*
+
+- name: Find all .config files to symlink
+  ansible.builtin.find:
+    paths: "{{ role_path }}/files/config"
+    file_type: any
+  register: config_files
+
+- name: Symlink config files
+  ansible.builtin.file:
+    src: "{{ item.path }}"
+    dest: "~/.config/{{ item.path | basename }}"
+    state: link
+  with_items: "{{ config_files.files }}"

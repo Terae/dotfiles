@@ -3,4 +3,8 @@
   hosts: local
   roles:
     # Tag each role so that we can select individual roles to run with ansible-playbook --tags
+    - {role: dotfiles, tags: ['dotfiles']}
+    - {role: git, tags: ['git']}
+    - {role: ssh, tags: ['ssh']}
     - {role: vim, tags: ['vim']}
+    - {role: zsh, tags: ['zsh']}

@@ -1,0 +1,7 @@
+Host bastion-ssh.biotex.lan ssh.sigilence.com
+  User bbigey
+  IdentityFile ~/.ssh/id_sigilence
+
+Host cuda.infy.io
+  User bbigey@infy.io
+  #ForwardX11 yes

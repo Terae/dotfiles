@@ -1,0 +1,23 @@
+---
+# Installation
+- import_tasks: debian.yml
+  when: ansible_os_family == "Debian"
+- import_tasks: redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- name: Download antigen.zsh
+  ansible.builtin.get_url:
+    url: https://git.io/antigen
+    dest: ~/.antigen.zsh
+    mode: '0644'
+
+- name: Symlink conf files
+  ansible.builtin.file:
+    src: "{{ item }}"
+    dest: "~/.{{ item | basename }}"
+    state: link
+  with_fileglob:
+    - ./*
+
+- name: Install antigen bundles
+  command: zsh -ic ':'

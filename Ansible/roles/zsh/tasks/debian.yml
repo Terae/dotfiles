@@ -1,6 +1,6 @@
 ---
-- name: Install vim with apt
+- name: Install zsh with apt
   apt:
-    name: vim
+    name: zsh
     state: latest
     # update_cache: true

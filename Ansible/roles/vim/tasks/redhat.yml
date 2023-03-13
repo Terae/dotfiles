@@ -1,4 +1,5 @@
 ---
 - name: Install vim with yum
-  yum: name=vim state=present
-  become_method: sudo
+  yum:
+    name: vim
+    update_cache: true

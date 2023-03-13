@@ -1,0 +1,37 @@
+source ~/.antigen.zsh
+
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+
+antigen bundles <<EOBUNDLES
+colored-man-pages
+command-not-found
+common-alias
+copyfile
+dirhistory
+exa-ls
+extract
+git
+git-prompt
+heroku
+lein
+pip
+python
+sudo
+unixorn/autoupdate-antigen.zshplugin
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-completions
+MichaelAquilina/zsh-autoswitch-virtualenv
+EOBUNDLES
+
+# Load the theme.
+#antigen theme robbyrussell
+antigen theme ys
+
+# Tell Antigen that you're done.
+antigen apply
+
+if [ -f ~/.profile ]; then
+  . ~/.profile
+fi

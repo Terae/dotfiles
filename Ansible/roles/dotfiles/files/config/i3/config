@@ -1,0 +1,348 @@
+#
+#██╗██████╗      ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗
+#██║╚════██╗    ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝
+#██║ █████╔╝    ██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗
+#██║ ╚═══██╗    ██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║
+#██║██████╔╝    ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝
+#╚═╝╚═════╝      ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝
+#
+
+#############
+# Variables #
+#############
+
+# set modifier
+set $super Mod4
+set $alt Mod1
+set $rofi_opts -lines 12 -padding 18 -width 60 -location 0 -sidebar-mode -columns 3 -font 'Noto Sans 10' -display-combi ">>>" 
+set $compositor compton -b --config ~/.config/compton.conf
+#set $locker i3lock -i ~/Pictures/triple_monitor.jpg
+set $locker i3lock-fancy -gpf Comic-Sans-MS -- scrot -z
+
+
+####################
+# General Settings #
+####################
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango: FontAwesome 8
+
+# Use Mouse+$super to drag floating windows to their wanted position
+floating_modifier $super
+
+# Display popups if it's from same window
+popup_during_fullscreen smart
+
+########################
+# Startup Applications #
+########################
+
+# Simple X compositor to improve menus focus
+exec --no-startup-id $compositor
+
+exec --no-startup-id xsettingsd &
+#exec_always --no-startup-id mullvad connect
+# Network configuration
+exec --no-startup-id nm-applet
+exec --no-startup-id xinput set-prop "Synaptics TM3072-003" "libinput Tapping Enabled" 1
+exec --no-startup-id nextcloud --background
+#exec --no-startup-id /opt/MullvadVPN/mullvad-vpn --daemon
+#exec --no-startup-id /usr/bin/signal-desktop
+#exec --no-startup-id clipit
+exec --no-startup-id flameshot
+exec_always --no-startup-id nitrogen --set-zoom ~/Pictures/wallpaper.jpg
+#exec --no-startup-id protonmail-bridge --no-window &
+exec --no-startup-id mpDris2 &
+exec --no-startup-id lxpolkit
+exec_always /usr/bin/numlockx on
+exec --no-startup-id xautolock -time 1 -locker $locker
+
+# Sart shutter at startup
+#exec shutter --min_at_startup
+
+exec dex -ae i3
+
+############
+# Bindings #
+############
+
+# Compositor
+#bindsym Ctrl+$mod+c exec --no-startup-id $compositor
+#bindsym Ctrl+$mod+k exec --no-startup-id killall compton
+
+# Start a terminal
+bindsym $super+Return exec --no-startup-id i3-sensible-terminal
+
+# kill focused window
+bindsym $super+Shift+q kill
+bindsym $alt+F4 kill
+#bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+
+# start dmenu (a program launcher)
+#bindsym $super+Shift+d exec i3-dmenu-desktop --dmenu="dmenu -i -fn 'Noto Sans:size=10'"
+# Start rofi (as program launcher)
+bindsym $super+Shift+d exec rofi $rofi_opts -show run
+# Start rofi (as application launcher)
+bindsym $super+d       exec rofi $rofi_opts -show drun
+# Start rofi (as window selector)
+bindsym $super+Tab     exec rofi $rofi_opts -show window
+
+# Screenshots
+bindsym --release Shift+Print exec --no-startup-id scrot -s '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/Screenshots/'
+bindsym Print exec --no-startup-id scrot '%Y-%m-%d-%T_$wx$h_scrot.png' -e 'mv $f ~/Pictures/Screenshots/'
+
+# common apps keybinds
+#bindsym Print exec scrot -s -e 'viewnior ~/$f'  'Cheese_%a-%d%b%y_%H.%M.png' 
+#bindsym Print exec shutter --select
+
+#change volume
+bindsym XF86AudioRaiseVolume exec "amixer -q -D pulse sset Master 5%+; notify-send 'sound up'"
+bindsym XF86AudioLowerVolume exec "amixer -q -D pulse sset Master 5%-; notify-send 'sound down'"
+bindsym XF86AudioMute        exec "amixer -q -D pulse sset Master toggle; notify-send 'sound toggled'"
+
+################################################################################################
+
+# Screen brightness controls
+#bindsym XF86MonBrightnessUp   exec "xbacklight -inc 10; notify-send 'brightness up'"
+#bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+bindsym XF86MonBrightnessUp   exec "sudo light -k -A 10; notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec "sudo light -k -U 10; notify-send 'brightness down'"
+
+
+# music control
+bindsym XF86AudioNext exec mpc next
+bindsym XF86AudioPrev exec mpc prev
+bindsym XF86AudioPlay exec mpc toggle
+bindsym XF86AudioStop exec mpc stop
+
+# change focus
+#bindsym $super+h focus left
+#bindsym $super+j focus down
+#bindsym $super+k focus up
+#bindsym $super+l focus right
+bindsym $super+Left focus left
+bindsym $super+Down focus down
+bindsym $super+Up focus up
+bindsym $super+Right focus right
+
+# move focused window
+bindsym $super+Shift+h move left
+bindsym $super+Shift+j move down
+bindsym $super+Shift+k move up
+bindsym $super+Shift+l move right
+bindsym $super+Shift+Left move left
+bindsym $super+Shift+Down move down
+bindsym $super+Shift+Up move up
+bindsym $super+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $super+h split h
+
+# split in vertical orientation
+bindsym $super+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $super+f fullscreen toggle
+
+# change container layout split
+bindsym $super+t layout stacking
+bindsym $super+y layout tabbed
+bindsym $super+e layout toggle split
+
+# toggle tiling / floating
+bindsym $super+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $super+Shift+space focus mode_toggle
+
+set $ws1  1:
+set $ws2  2:
+set $ws3  3:
+set $ws4  4:
+set $ws5  5
+set $ws6  6
+set $ws7  7
+set $ws8  8:
+set $ws9  9:
+set $ws10 10:
+
+# workspace back and forth (with/without active container)
+workspace_auto_back_and_forth yes
+
+# switch to workspace
+bindsym $alt+Control+Right workspace next
+bindsym $alt+Control+Left workspace prev
+bindsym Mod1+Tab workspace next
+bindsym Mod1+Shift+Tab workspace prev
+bindsym $super+1 workspace $ws1
+bindsym $super+2 workspace $ws2
+bindsym $super+3 workspace $ws3
+bindsym $super+4 workspace $ws4
+bindsym $super+5 workspace $ws5
+bindsym $super+6 workspace $ws6
+bindsym $super+7 workspace $ws7
+bindsym $super+8 workspace $ws8
+bindsym $super+9 workspace $ws9
+bindsym $super+0 workspace $ws10
+
+# Move focused container to workspace
+bindsym $super+Ctrl+1 move container to workspace $ws1
+bindsym $super+Ctrl+2 move container to workspace $ws2
+bindsym $super+Ctrl+3 move container to workspace $ws3
+bindsym $super+Ctrl+4 move container to workspace $ws4
+bindsym $super+Ctrl+5 move container to workspace $ws5
+bindsym $super+Ctrl+6 move container to workspace $ws6
+bindsym $super+Ctrl+7 move container to workspace $ws7
+bindsym $super+Ctrl+8 move container to workspace $ws8
+bindsym $super+Ctrl+9 move container to workspace $ws9
+bindsym $super+Ctrl+0 move container to workspace $ws10
+
+# Move to workspace with focused container
+bindsym $super+Shift+1 move container to workspace $ws1;  workspace $ws1
+bindsym $super+Shift+2 move container to workspace $ws2;  workspace $ws2
+bindsym $super+Shift+3 move container to workspace $ws3;  workspace $ws3
+bindsym $super+Shift+4 move container to workspace $ws4;  workspace $ws4
+bindsym $super+Shift+5 move container to workspace $ws5;  workspace $ws5
+bindsym $super+Shift+6 move container to workspace $ws6;  workspace $ws6
+bindsym $super+Shift+7 move container to workspace $ws7;  workspace $ws7
+bindsym $super+Shift+8 move container to workspace $ws8;  workspace $ws8
+bindsym $super+Shift+9 move container to workspace $ws9;  workspace $ws9
+bindsym $super+Shift+0 move container to workspace $ws10; workspace $ws10
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $super+Shift+r restart
+
+# reload the configuration file
+bindsym $super+Shift+c reload
+
+# resize window (you can also use the mouse for that)
+mode "  resize" {
+        bindsym h     resize shrink width  5 px or 5 ppt
+        bindsym j     resize grow   height 5 px or 5 ppt
+        bindsym k     resize shrink height 5 px or 5 ppt
+        bindsym l     resize grow   width  5 px or 5 ppt
+        bindsym Left  resize shrink width  5 px or 5 ppt
+        bindsym Down  resize grow   height 5 px or 5 ppt
+        bindsym Up    resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow   width  5 px or 5 ppt
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $super+r mode "  resize"
+
+bindsym $super+Ctrl+l exec --no-startup-id $locker
+
+set $mode_system System    lock(l)      logout(e)      suspend(s)     hibernate(h)      reboot(r)      shutdown(S)
+mode "$mode_system" {
+    bindsym l       exec --no-startup-id $locker,                        mode "default"
+    bindsym e       exec --no-startup-id i3-msg exit,                    mode "default"
+    bindsym s       exec --no-startup-id $locker && systemctl suspend,   mode "default"
+    bindsym h       exec --no-startup-id $locker && systemctl hibernate, mode "default"
+    bindsym r       exec --no-startup-id systemctl reboot,               mode "default"
+    bindsym p       exec --no-startup-id systemctl poweroff -i,          mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i,          mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $super+Shift+e mode "$mode_system"
+
+# exit i3
+bindsym Mod1+Ctrl+Delete exec "i3-nagbar -t warning -m 'Really, exit?' -b 'Yes' 'i3-msg exit'"
+
+# panel
+bar {
+    colors {
+        background #222222
+        statusline #ffffff
+        separator  #666666
+
+        # colour of border, background, and text
+        #focused_workspace       #2f343f #bf616a #d8dee8
+        #active_workspace        #2f343f #2f343f #d8dee8
+        #inactive_workspace      #2f343f #2f343f #d8dee8
+        #urgent_workspace        #2f343f #ebcb8b #2f343f
+        focused_workspace  #0088CC #0088CC #ffffff
+        active_workspace   #333333 #333333 #ffffff
+        inactive_workspace #333333 #333333 #888888
+        urgent_workspace   #2f343a #900000 #ffffff
+    }
+    #status_command i3status
+    font pango: FontAwesome 10, PowerlineSymbols 11.2
+    status_command ~/.cargo/bin/i3status-rs ~/.config/i3status-rust/config.toml
+}
+
+# window rules, you can find the window class using xprop
+for_window [class=".*"] border pixel 2
+#assign [class="Firefox"]                  $ws1
+assign [class="Thunderbird|Proton"]       $ws2
+assign [class="keepassxc"]                $ws3
+assign [class="Mattermost|Teams|Signal|Element"]  $ws4
+assign [class="Transmission-gtk"]         $ws6
+assign [class="Steam"]                    $ws8
+#assign [class=Thunar|File-roller] 3
+#assign [class=Geany|Evince|Gucharmap|Soffice|libreoffice*] 4
+#assign [class=Audacity|Vlc|mpv|Ghb|Xfburn|Gimp*|Inkscape] 5
+#assign [class=Lxappearance|System-config-printer.py|Lxtask|GParted|Pavucontrol|Exo-helper*|Lxrandr|Arandr] 6
+for_window [class=Viewnior|feh|Audacious|File-roller|Lxappearance|Lxtask|Pavucontrol|GParted] floating enable border normal
+for_window [class=URxvt|Firefox|Geany|Evince|Soffice|libreoffice*|mpv|Ghb|Xfburn|Gimp*|Inkscape|Vlc|Lxappearance|Audacity] focus
+for_window [class=Xfburn|GParted|System-config-printer.py|Lxtask|Pavucontrol|Exo-helper*|Lxrandr|Arandr] focus
+
+# Switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
+
+# colour of border, background, text, indicator, and child_border
+#client.focused              #bf616a #2f343f #d8dee8 #bf616a #d8dee8
+#client.focused_inactive     #2f343f #2f343f #d8dee8 #2f343f #2f343f
+#client.unfocused            #2f343f #2f343f #d8dee8 #2f343f #2f343f
+#client.urgent               #2f343f #2f343f #d8dee8 #2f343f #2f343f
+#client.placeholder          #2f343f #2f343f #d8dee8 #2f343f #2f343f
+#client.background           #2f343f
+
+client.focused              #bf616a #bf616a #d8dee8 #bf616a #bf616a
+client.focused_inactive     #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.unfocused            #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.urgent               #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.placeholder          #2f343f #2f343f #d8dee8 #2f343f #2f343f
+client.background           #2f343f
+
+# class                 border  backgr. text    indicator child_border
+#client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+#client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+#client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+#client.urgent           #2f343a #900000 #ffffff #900000   #900000
+#client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+#client.background       #ffffff
+
+####################################
+# ROB Custom Config
+####################################
+
+# Repeat rate config
+exec --no-startup-id xset r rate 220 40
+# 185 -  delay
+# 100 - interval
+
+# Control volume
+bindsym $super+Control+$alt+k exec amixer -D pulse sset Master 5%+
+bindsym $super+Control+$alt+j exec amixer -D pulse sset Master 5%-
+
+set $mainmonitor   DP-1-1
+set $laptopmonitor eDP-1
+set $secondmonitor HDMI-1
+
+# Use this for 3 monitor setup at work
+#exec --no-startup-id xrandr --output $secondmonitor --mode 1920x1200 --pos 0x0 --rotate normal --output $mainmonitor --primary --mode 1920x1200 --pos 1920x0 --rotate normal --output $laptopmonitor --mode 1920x1080  --pos 3840x0 --rotate normal
+#workspace 1 output $laptopmonitor
+#workspace 2 output $mainmonitor
+#workspace 3 output $secondmonitor
+
+#Use this for only laptop
+#exec --no-startup-id xrandr --output $laptopmonitor --primary --mode 1920x1080 --pos 0x0 --rotate normal
+#exec --no-startup-id xrandr --output $secondmonitor --off --output $laptopmonitor --primary --mode 1920x1080 --pos 0x0 --rotate normal --output $mainmonitor --off
+#exec --no-startup-id xrandr --output DP-1-2 --off --output eDP-1 --primary --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1-1 --off
+exec --no-startup-id ~/.screenlayout/dualscreen.sh
+
+
