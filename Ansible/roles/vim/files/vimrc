@@ -1,0 +1,6 @@
+" Use Vim settings, rather than Vi settings
+set nocompatible
+
+" Source viminit files {{{
+runtime! config/*.vim
+" }}}
