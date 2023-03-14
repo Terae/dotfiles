@@ -6,7 +6,7 @@
     state: latest
     # update_cache: true
   loop:
-    - "{{ dotfiles.packages }}"
+    - "{{ local.packages }}"
   when: ansible_os_family == "Debian"
 
 - name: Install default packages with yum
@@ -16,5 +16,5 @@
     state: latest
     # update_cache: true
   loop:
-    - "{{ dotfiles.packages }}"
+    - "{{ local.packages }}"
   when: ansible_os_family == "RedHat"

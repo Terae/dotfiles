@@ -1,5 +1,5 @@
 ---
-dotfiles:
+local:
   packages:
     - ca-certificates
     - curl
