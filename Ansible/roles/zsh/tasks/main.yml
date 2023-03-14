@@ -1,23 +1,28 @@
 ---
 # Installation
-- import_tasks: debian.yml
-  when: ansible_os_family == "Debian"
-- import_tasks: redhat.yml
-  when: ansible_os_family == "RedHat"
+- ansible.builtin.import_role:
+    name: manala.roles.zsh
+  become: true
 
 - name: Download antigen.zsh
   ansible.builtin.get_url:
     url: https://git.io/antigen
-    dest: ~/.antigen.zsh
+    dest: "{{ ansible_env.HOME }}/.antigen.zsh"
     mode: '0644'
 
 - name: Symlink conf files
   ansible.builtin.file:
     src: "{{ item }}"
-    dest: "~/.{{ item | basename }}"
+    dest: "{{ ansible_env.HOME }}/.{{ item | basename }}"
     state: link
   with_fileglob:
     - ./*
 
 - name: Install antigen bundles
   command: zsh -ic ':'
+
+- name: Set ZSH as the default shell
+  become: true
+  user:
+    name: "{{ ansible_user_id }}"
+    shell: /bin/zsh

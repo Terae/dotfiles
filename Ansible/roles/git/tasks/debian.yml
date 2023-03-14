@@ -1,8 +1,0 @@
----
-- name: Install git with apt
-  apt:
-    pkg:
-      - git
-      - git-extras
-    state: latest
-    # update_cache: true

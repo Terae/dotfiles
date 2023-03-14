@@ -1,14 +1,11 @@
 ---
 # Installation
-- import_tasks: debian.yml
-  when: ansible_os_family == "Debian"
-- import_tasks: redhat.yml
-  when: ansible_os_family == "RedHat"
+- import_tasks: installer.yml
 
 - name: Symlink conf files
   ansible.builtin.file:
     src: "{{ item }}"
-    dest: "~/.{{ item | basename }}"
+    dest: "{{ ansible_env.HOME }}/.{{ item | basename }}"
     state: link
   with_fileglob:
     - ./*

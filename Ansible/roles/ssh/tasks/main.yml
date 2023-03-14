@@ -1,6 +1,6 @@
 ---
 - name: Create SSH directory
-  file: dest="~/.bin" state=directory
+  file: dest="{{ ansible_env.HOME }}/.bin" state=directory
 
 - name: Find all files to symlink
   ansible.builtin.find:
@@ -11,6 +11,6 @@
 - name: Symlink conf files
   ansible.builtin.file:
     src: "{{ item.path }}"
-    dest: "~/.ssh/{{ item.path | basename }}"
+    dest: "{{ ansible_env.HOME }}/.ssh/{{ item.path | basename }}"
     state: link
   with_items: "{{ ssh_files.files }}"

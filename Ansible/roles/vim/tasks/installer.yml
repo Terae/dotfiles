@@ -1,0 +1,16 @@
+---
+- name: Install vim with apt
+  become: true
+  ansible.builtin.apt:
+    name: vim
+    state: latest
+    # update_cache: true
+  when: ansible_os_family == "Debian"
+
+- name: Install vim with yum
+  become: true
+  ansible.builtin.yum:
+    name: vim
+    state: latest
+    # update_cache: true
+  when: ansible_os_family == "RedHat"

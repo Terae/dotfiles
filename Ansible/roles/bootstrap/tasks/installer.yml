@@ -1,0 +1,20 @@
+---
+- name: Install default packages with apt
+  become: true
+  ansible.builtin.apt:
+    pkg: "{{ item }}"
+    state: latest
+    # update_cache: true
+  loop:
+    - "{{ dotfiles.packages }}"
+  when: ansible_os_family == "Debian"
+
+- name: Install default packages with yum
+  become: true
+  ansible.builtin.yum:
+    name: "{{ item }}"
+    state: latest
+    # update_cache: true
+  loop:
+    - "{{ dotfiles.packages }}"
+  when: ansible_os_family == "RedHat"

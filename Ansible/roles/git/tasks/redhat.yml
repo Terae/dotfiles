@@ -1,7 +1,0 @@
----
-- name: Install git with yum
-  yum:
-    name:
-      - git
-      - git-extras
-    update_cache: true

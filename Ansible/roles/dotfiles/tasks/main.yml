@@ -1,11 +1,11 @@
 ---
 - name: Create ~/.bin
-  file: dest="~/.bin" state=directory
+  file: dest="{{ ansible_env.HOME }}/.bin" state=directory
 
 - name: Link executables
   ansible.builtin.file:
     src: "{{ item }}"
-    dest: "~/.bin/{{ item | basename }}"
+    dest: "{{ ansible_env.HOME }}/.bin/{{ item | basename }}"
     state: link
   with_fileglob:
     - ./bin/*
@@ -13,7 +13,7 @@
 - name: Symlink dotfiles files
   ansible.builtin.file:
     src: "{{ item }}"
-    dest: "~/.{{ item | basename }}"
+    dest: "{{ ansible_env.HOME }}/.{{ item | basename }}"
     state: link
   with_fileglob:
     - ./dotfiles/*
@@ -27,6 +27,6 @@
 - name: Symlink config files
   ansible.builtin.file:
     src: "{{ item.path }}"
-    dest: "~/.config/{{ item.path | basename }}"
+    dest: "{{ ansible_env.HOME }}/.config/{{ item.path | basename }}"
     state: link
   with_items: "{{ config_files.files }}"

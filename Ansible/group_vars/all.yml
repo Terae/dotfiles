@@ -1,0 +1,28 @@
+---
+dotfiles:
+  packages:
+    - ca-certificates
+    - curl
+    - debian-archive-keyring
+    - devscripts
+    - fonts-font-awesome
+    - fonts-powerline
+    - gtk-chtheme
+    - graphviz
+    - iftop
+    - jq
+    - libdistro-info-perl
+    - libfuse2
+    - libssl-dev
+    - lxappearance
+    - ncdu
+    - network-manager-openvpn-gnome
+    - openvpn
+    - shellcheck
+    - tldr
+    - traceroute
+    - tree
+    - vlc
+    - watch
+    - wget
+    - youtube-dl

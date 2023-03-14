@@ -1,5 +1,0 @@
----
-- name: Install vim with yum
-  yum:
-    name: vim
-    update_cache: true

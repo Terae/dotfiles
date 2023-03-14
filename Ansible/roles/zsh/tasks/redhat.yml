@@ -1,5 +1,0 @@
----
-- name: Install zsh with yum
-  yum:
-    name: zsh
-    update_cache: true

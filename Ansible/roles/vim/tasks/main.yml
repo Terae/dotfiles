@@ -1,15 +1,12 @@
 ---
 # Installation
-- import_tasks: debian.yml
-  when: ansible_os_family == "Debian"
-- import_tasks: redhat.yml
-  when: ansible_os_family == "RedHat"
+- import_tasks: installer.yml
 
 # Plugin manager
 - name: vundle
   git:
     repo: https://github.com/gmarik/Vundle.vim.git
-    dest: "~/.vim/bundle/Vundle.vim"
+    dest: "{{ ansible_env.HOME }}/.vim/bundle/Vundle.vim"
   tags: update
 
 # Configuration
@@ -22,10 +19,9 @@
 - name: Symlink conf files
   ansible.builtin.file:
     src: "{{ item.path }}"
-    dest: "~/.vim/{{ item.path | basename }}"
+    dest: "{{ ansible_env.HOME }}/.vim/{{ item.path | basename }}"
     state: link
   with_items: "{{ vim_files.files }}"
 
 - name: Install plugins
   command: vim +PluginInstall +qall
-  when: vim_install_plugins|bool
