@@ -1,6 +1,9 @@
 ---
 local:
   packages:
+    - aha
+    - ansible
+    - ansible-lint
     - ca-certificates
     - curl
     - debian-archive-keyring
@@ -18,6 +21,7 @@ local:
     - ncdu
     - network-manager-openvpn-gnome
     - openvpn
+    - pavucontrol
     - shellcheck
     - tldr
     - traceroute
@@ -25,4 +29,5 @@ local:
     - vlc
     - watch
     - wget
+    - yamllint
     - youtube-dl

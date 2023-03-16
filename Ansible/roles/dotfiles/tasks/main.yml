@@ -10,13 +10,18 @@
   with_fileglob:
     - ./bin/*
 
+- name: Find all dotfiles to symlink
+  ansible.builtin.find:
+    paths: "{{ role_path }}/files/dotfiles"
+    file_type: any
+  register: dot_files
+
 - name: Symlink dotfiles files
   ansible.builtin.file:
-    src: "{{ item }}"
-    dest: "{{ ansible_env.HOME }}/.{{ item | basename }}"
+    src: "{{ item.path }}"
+    dest: "{{ ansible_env.HOME }}/.{{ item.path | basename }}"
     state: link
-  with_fileglob:
-    - ./dotfiles/*
+  with_items: "{{ dot_files.files }}"
 
 - name: Find all .config files to symlink
   ansible.builtin.find:
