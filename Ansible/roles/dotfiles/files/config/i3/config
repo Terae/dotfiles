@@ -17,7 +17,7 @@ set $alt Mod1
 set $rofi_opts -lines 12 -padding 18 -width 60 -location 0 -sidebar-mode -columns 3 -font 'Noto Sans 10' -display-combi ">>>" 
 set $compositor compton -b --config ~/.config/compton.conf
 #set $locker i3lock -i ~/Pictures/triple_monitor.jpg
-set $locker i3lock-fancy -gpf Comic-Sans-MS -- scrot -z
+set $locker i3lock-fancy -gpf Liberation-Sans -- scrot -z
 
 
 ####################
