@@ -1,103 +1,135 @@
-theme = "nord-dark"
-icons = "awesome"
+[theme]
+#theme = "nord-dark"
+#theme = "slick"
+theme = "semi-native"
+[icons]
+icons = "awesome4"
+
+# Documentation: https://docs.rs/i3status-rs/latest/i3status_rs/blocks/index.html
 
 [[block]]
 block = "uptime"
 
+#[[block]]
+#block = "docker"
+#format = " $icon $running.eng(w:1)/$total "
+
 [[block]]
 block = "disk_space"
 path = "/"
-alias = "/"
 info_type = "available"
-unit = "GB"
+alert_unit = "GB"
 interval = 20
 warning = 20.0
 alert = 10.0
-format = "{icon} {percentage} used"
+format = " $icon $percentage free "
+format_alt = " $icon $available/$total free "
+[[block.click]]
+button = "right"
+cmd = "baobab /"
 
 [[block]]
 block = "disk_space"
 path = "/home"
-alias = "/home"
 info_type = "available"
-unit = "GB"
+alert_unit = "GB"
 interval = 20
 warning = 20.0
 alert = 10.0
-#format = "{icon} {used}/{total} ({available} free)"
-format = "{icon} {available} free"
+format = " $icon $available/$total free "
+format_alt = " $icon $percentage free "
 icons_format = ""
+[[block.click]]
+button = "right"
+cmd = "baobab /home"
 
 [[block]]
 block = "memory"
-display_type = "memory"
-format_mem = "{mem_used_percents}"
-format_swap = "{swap_used_percents}"
+format_alt = " $icon_swap $swap_free.eng(w:3,u:B,p:M)/$swap_total.eng(w:3,u:B,p:M)($swap_used_percents.eng(w:2)) "
+[[block.click]]
+button = "right"
+cmd = "gnome-system-monitor"
 
 [[block]]
 block = "cpu"
 interval = 1
-#format = "{barchart} {utilization} {frequency}"
-format = "{utilization}"
-on_click = "gnome-system-monitor"
+#format = " $icon $barchart $utilization $frequency "
+format_alt = " $icon $barchart $frequency{ $boost|} "
+[[block.click]]
+button = "right"
+cmd = "gnome-system-monitor"
 
 [[block]]
 block =  "music"
-buttons = ["play", "next"]
-max_width = 15
-#hide_when_empty = true
-#on_click = "firefox 192.168.1.21:6680/iris"
-
-#[[block]]
-#block = "external_ip"
-#format = "{country_flag} {ip}"
-#on_click = "gnome-terminal -- /opt/MullvadVPN/mullvad-gui --enable-crashpad"
-
-#[[block]]
-#block = "net"
-#device = "wlp4s0"
-#format = "{ssid} {signal_strength} {ip} {speed_down;K*b} {graph_down;K*b}"
-#interval = 5
-#hide_inactive = true
+format = " $icon {$combo.str(max_w:15,rot_interval:0.5) $play |} "
+#[[block.click]]
+#button = "right"
+#cmd = "firefox 192.168.1.21:6680/iris"
 
 [[block]]
-block = "networkmanager"
-on_click = "gnome-terminal -- nmtui"
-interface_name_exclude = ["br\\-[0-9a-f]{12}", "docker\\d+", "wg-mullvad", "tun?"]
-interface_name_include = []
-ap_format = "{ssid^10}"
+block = "external_ip"
+use_ipv4 = true
+[[block.click]]
+button = "right"
+cmd = "gnome-terminal -- /opt/MullvadVPN/mullvad-gui --enable-crashpad"
 
 [[block]]
 block = "sound"
-on_click = "pavucontrol"
+driver = "pulseaudio"
+max_vol = 200
+headphones_indicator = true
+[[block.click]]
+button = "left"
+action = "toggle_mute"
+[[block.click]]
+button = "right"
+cmd = "pavucontrol"
+
+[[block]]
+block = "toggle"
+format = " $icon HDMI "
+command_state = "xrandr | grep ' connected ' | grep -v eDP-1"
+command_on  = "~/.screenlayout/dualscreen.sh"
+command_off = "~/.screenlayout/laptop.sh"
+interval = 5
+[[block.click]]
+button = "right"
+cmd = "arandr"
+
+#[[block]]
+#block = "xrandr"
+#format = " $brightness_icon $brightness"
 
 [[block]]
 block = "backlight"
 device = "intel_backlight"
-on_click = "arandr"
-
-#[[block]]
-#bock = "toggle"
-#text = "xrandr"
-#command_state = "xrandr | grep HDMI-1\\ connected8 | grep -v eDP1"
-#command_on = "~/.screenlayout/double_screen.sh"
-#command_off = "~/.screenlayout/laptop.sh"
-#icon_on = ""
-#icon_off = ""
-#interval = 5
+cycle = [0, 10, 50, 100]
+[[block.click]]
+button = "right"
+cmd = "arandr"
 
 [[block]]
 block = "battery"
-if_command = "test -e /sys/class/power_supply/BAT0"
-on_click = "gnome-power-statistics"
+[[block.click]]
+button = "right"
+cmd = "gnome-power-statistics"
 
 [[block]]
 block = "custom"
-command = "sed 's/  //' <(curl 'https://wttr.in/Toulouse?lang=fr&format=3' -s)"
+command = "sed 's/  //' <(curl 'https://wttr.in/Brax?lang=fr&format=3' -s)"
 interval = 600
+[[block.click]]
+button = "left"
+update = true
 
 [[block]]
 block = "time"
-interval = 5
-format = "%a %d/%m %R"
-on_click = "gnome-control-center"
+interval = 60
+format = " $icon $timestamp.datetime(f:'%a %d/%m %R', l:fr_FR) "
+[[block.click]]
+button = "right"
+cmd = "gnome-control-center"
+
+[[block]]
+block = "tea_timer"
+done_cmd = "notify-send 'Timer Finished'"

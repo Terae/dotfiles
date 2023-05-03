@@ -2,32 +2,53 @@
 local:
   packages:
     - aha
-    - ansible
-    - ansible-lint
+    - arandr
+    - build-essential
     - ca-certificates
+    - cargo
+    - clipit
+    - compton
     - curl
     - debian-archive-keyring
     - devscripts
+    - flameshot
     - fonts-font-awesome
     - fonts-powerline
-    - gtk-chtheme
+    - freeplane
+    - gcc
+    - gnome-tweaks
     - graphviz
+    - gtk-chtheme
     - iftop
+    - i3-wm
+    - i3lock-fancy
     - jq
+    - keepassxc
     - libdistro-info-perl
     - libfuse2
     - libssl-dev
     - lxappearance
     - ncdu
     - network-manager-openvpn-gnome
+    - nextcloud-desktop
+    - nitrogen
+    - numlockx
+    - okular
     - openvpn
     - pavucontrol
+    - rofi
+    - rustc
+    - screen
     - shellcheck
+    - simple-scan
     - tldr
+    - torbrowser-launcher
     - traceroute
     - tree
+    - virtualenv
     - vlc
     - watch
     - wget
+    - xautolock
     - yamllint
     - youtube-dl

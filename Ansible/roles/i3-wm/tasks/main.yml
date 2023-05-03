@@ -1,0 +1,23 @@
+---
+
+- name: Pulling 'i3-status-rust'
+  ansible.builtin.git:
+    repo: https://github.com/greshake/i3status-rust
+    dest: "{{ ansible_env.HOME }}/Documents/git/i3status-rust"
+    single_branch: yes
+    version: master
+    force: yes
+
+- name: Symlink i3status-rs files
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/Documents/git/i3status-rust/files"
+    dest: "{{ ansible_env.HOME }}/.local/share/iS-status-rust"
+    state: link
+
+- name: Install "i3status-rs" Rust package
+  community.general.cargo:
+    name: i3status-rs
+    state: latest
+
+- name: Reloading i3 conf
+  ansible.builtin.command: i3-msg reload
