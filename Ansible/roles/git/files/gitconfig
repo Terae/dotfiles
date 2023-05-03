@@ -1,8 +1,8 @@
 # -*- mode: gitconfig -*-
 [user]
-	email = benjamin.bigey@sigilence.com
-	name = Benjamin BIGEY
-    signingkey = EE19952C1BB2D28D
+	email = Terae@protonmail.com
+	name = Terae
+  #signingkey = EE19952C1BB2D28D
 
 [color]
 	advice = true
@@ -118,6 +118,12 @@
 	ours   = !git checkout --ours $@ && git add $@
 	theirs = !git checkout --theirs $@ && git add $@
 
+[github]
+	user = Terae
+
+[url "git@github.com:"]
+	insteadOf = @gh:
+
 [web]
 	browser = firefox
 
@@ -128,8 +134,8 @@
 	#remote = origin
 	#merge = refs/heads/master
 
-[commit]
-	gpgSign = true
+#[commit]
+#	gpgSign = true
 
 [filter "kicad_project"]
 	clean = sed -E 's/^update=.*$/update=Date/'

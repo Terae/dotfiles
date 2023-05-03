@@ -1,5 +1,5 @@
 theme = "nord-dark"
-icons = "/home/benjamin/Documents/git/i3status-rust/files/icons/awesome.toml"
+icons = "awesome"
 
 [[block]]
 block = "uptime"
